@@ -1,0 +1,15 @@
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+
+contract VerifySignature {
+    using ECDSA for bytes32;
+
+    function verify(bytes32 hash, bytes memory signature, address expectedAddress) public pure returns (bool) {
+        // Recover the signer from the hash and the signature
+        address recoveredAddress = hash.recover(signature);
+
+        // The signature is valid if the signer is the same as the expected address
+        return (recoveredAddress == expectedAddress);
+    }
+}
