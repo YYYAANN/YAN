@@ -1,0 +1,25 @@
+pragma solidity ^0.8.0;
+
+contract DHPublicKeyContract {
+    address public owner;
+    bytes public dhPublicKey; // DH公開鍵を格納する変数
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can set the DH public key");
+        _;
+    }
+
+    // DH公開鍵を設定する関数
+    function setDHPublicKey(bytes memory _publicKey) public onlyOwner {
+        dhPublicKey = _publicKey;
+    }
+
+    // DH公開鍵を取得する関数
+    function getDHPublicKey() public view returns (bytes memory) {
+        return dhPublicKey;
+    }
+}
